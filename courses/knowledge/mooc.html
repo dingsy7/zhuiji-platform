@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多学科筑基慕课 - 筑基云平台</title>
+<style>
+:root {
+  --zju-blue: #003B7E;
+  --zju-blue-light: #005A9E;
+  --zju-blue-pale: #E8F0FA;
+  --zju-gold: #C4922E;
+  --bg-white: #FFFFFF;
+  --bg-light: #F5F7FA;
+  --text-primary: #1A1A1A;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --border: #E0E4E8;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --radius: 8px;
+  --font-cn: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
+  --nav-height: 56px;
+  --max-width: 1100px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-cn); color: var(--text-primary); background: var(--bg-light); line-height: 1.7; }
+a { text-decoration: none; color: inherit; }
+
+/* Navbar */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-height); background: var(--zju-blue);
+  box-shadow: 0 2px 8px rgba(0,59,126,0.2);
+  display: flex; align-items: center; padding: 0 24px;
+}
+.navbar-inner { width: 100%; max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+.navbar-logo { height: 36px; }
+.navbar-logo img { height: 36px; filter: brightness(0) invert(1); }
+.back-btn {
+  color: rgba(255,255,255,0.9); font-size: 0.9rem; cursor: pointer;
+  display: flex; align-items: center; gap: 6px; transition: opacity 0.2s;
+}
+.back-btn:hover { opacity: 0.8; }
+
+/* Content */
+.main { padding-top: var(--nav-height); }
+.header {
+  background: linear-gradient(135deg, #1B5E9B 0%, #3A8FD4 100%);
+  color: #fff; padding: 48px 24px 40px; text-align: center;
+}
+.header h1 { font-size: 1.8rem; margin-bottom: 8px; }
+.header p { opacity: 0.85; font-size: 0.95rem; }
+
+.section { padding: 40px 24px; max-width: var(--max-width); margin: 0 auto; }
+.table-wrapper {
+  background: #fff; border-radius: 10px; overflow: hidden;
+  box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+}
+table { width: 100%; border-collapse: collapse; }
+thead { background: var(--zju-blue-pale); }
+th {
+  padding: 14px 18px; text-align: left; font-size: 0.9rem; font-weight: 600;
+  color: var(--zju-blue); border-bottom: 2px solid var(--zju-blue);
+}
+td { padding: 12px 18px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg-light); }
+td.seq { width: 60px; color: var(--text-muted); text-align: center; }
+td.name { font-weight: 500; color: var(--text-primary); }
+td.teacher { color: var(--text-secondary); white-space: nowrap; }
+td.link { }
+td.link a {
+  color: var(--zju-blue); font-size: 0.85rem; word-break: break-all;
+  transition: color 0.2s;
+}
+td.link a:hover { color: var(--zju-blue-light); text-decoration: underline; }
+
+@media (max-width: 768px) {
+  th, td { padding: 10px 12px; font-size: 0.82rem; }
+  td.teacher { display: none; }
+  th:nth-child(3) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-logo"><img src="../../logo.png" alt="浙大二院"></div>
+    <a href="../../index.html" class="back-btn">← 返回首页</a>
+  </div>
+</nav>
+
+<main class="main">
+  <div class="header">
+    <h1>多学科筑基慕课</h1>
+    <p>20门跨学科慕课资源 · 由浙大二院各学科优秀师资主讲</p>
+  </div>
+
+  <div class="section">
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:60px">序号</th>
+            <th>课程名称</th>
+            <th>负责人</th>
+            <th>课程链接</th>
+          </tr>
+        </thead>
+        <tbody id="courseTableBody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script>
+const courses = [
+  {seq:"1", name:"内科病临床思维", teacher:"薛静", url:"https://coursehome.zhihuishu.com/courseHome/1000001587#teachTeam"},
+  {seq:"2", name:"内科危急症诊疗能力培训", teacher:"薛静", url:"https://coursehome.zhihuishu.com/courseHome/1000095014#teachTeam"},
+  {seq:"3", name:"内科实习胃肠镜技能培训", teacher:"韩跃华", url:"https://coursehome.zhihuishu.com/courseHome/1000095015#teachTeam"},
+  {seq:"4", name:"诊断学-体格检查篇", teacher:"谢小洁", url:"https://coursehome.zhihuishu.com/courseHome/1000110540#teachTeam"},
+  {seq:"5", name:"外科临床思维", teacher:"叶松", url:"https://coursehome.zhihuishu.com/courseHome/1000095005#teachTeam"},
+  {seq:"6", name:"外科腹腔镜技能培训", teacher:"叶松", url:"https://www.xueyinonline.com/detail/232652331"},
+  {seq:"7", name:"心血管整合模块课程", teacher:"谢小洁", url:"https://www.xueyinonline.com/detail/232652280"},
+  {seq:"8", name:"心血管内科学", teacher:"王建安", url:"https://www.icourse163.org/course/ZJU-1206457838?from=searchPage&outVendor=zw_mooc_pcssjg_"},
+  {seq:"9", name:"心脏康复学", teacher:"谢小洁", url:"https://www.icourse163.org/course/ZJU-1206449827?from=searchPage&outVendor=zw_mooc_pcssjg_"},
+  {seq:"10", name:"肾脏内科学", teacher:"马坤琳", url:"https://coursehome.zhihuishu.com/courseHome/1000095012#teachTeam"},
+  {seq:"11", name:"神经内科常见症状的临床思维培训", teacher:"张宝荣", url:"https://coursehome.zhihuishu.com/courseHome/1000095008#teachTeam"},
+  {seq:"12", name:"急危重症早期识别与处理要略", teacher:"张茂", url:"https://www.pmphmooc.com/#/moocDetails?courseID=33220"},
+  {seq:"13", name:"创伤与急救医学", teacher:"许永安", url:"https://coursehome.zhihuishu.com/courseHome/1000069963#teachTeam"},
+  {seq:"14", name:"精神病学", teacher:"林铮", url:"https://www.icourse163.org/course/ZJU-1206575807?from=searchPage&outVendor=zw_mooc_pcssjg_"},
+  {seq:"15", name:"医学影像学", teacher:"张敏鸣", url:"https://courses.zju.edu.cn/course/51429"},
+  {seq:"16", name:"肺与纵膈常见疾病影像表现", teacher:"王丽华", url:"https://coursehome.zhihuishu.com/courseHome/1000081761#teachTeam"},
+  {seq:"17", name:"急腹症之影像诊断", teacher:"余日胜", url:"https://coursehome.zhihuishu.com/courseHome/1000095000#teachTeam"},
+  {seq:"18", name:"全科医学与健康管理", teacher:"宋震亚", url:"https://coursehome.zhihuishu.com/courseHome/1000081755#teachTeam"},
+  {seq:"19", name:"腹部影像学检查方法及常见疾病影像诊断", teacher:"余日胜", url:"https://coursehome.zhihuishu.com/courseHome/1000081758#teachTeam"},
+  {seq:"20", name:"眼科常见病临床诊疗思维与实习指导", teacher:"叶娟", url:"https://coursehome.zhihuishu.com/courseHome/1000095003#teachTeam"}
+];
+
+const tbody = document.getElementById('courseTableBody');
+courses.forEach(c => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td class="seq">${c.seq}</td>
+    <td class="name">${c.name}</td>
+    <td class="teacher">${c.teacher}</td>
+    <td class="link"><a href="${c.url}" target="_blank" rel="noopener">${c.url}</a></td>
+  `;
+  tbody.appendChild(tr);
+});
+</script>
+</body>
+</html>
