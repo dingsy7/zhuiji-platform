@@ -59,15 +59,6 @@ ul, ol { list-style: none; }
 .navbar-logo { height: 42px; }
 .navbar-logo img { height: 42px; width: auto; filter: brightness(0) invert(1); }
 
-/* Page View Counter */
-.page-counter {
-  display: flex; align-items: center; gap: 6px;
-  color: rgba(255,255,255,0.9); font-size: 0.82rem;
-  cursor: default;
-}
-.page-counter svg { width: 18px; height: 18px; opacity: 0.8; }
-.page-counter .count { font-weight: 600; font-variant-numeric: tabular-nums; }
-
 /* ===== Main Content ===== */
 .main { padding-top: var(--nav-height); }
 
@@ -328,14 +319,6 @@ ul, ol { list-style: none; }
     <div class="navbar-logo">
       <img src="logo.png" alt="浙江大学医学院附属第二医院">
     </div>
-    <div class="page-counter" title="页面浏览量">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-        <circle cx="12" cy="12" r="3"/>
-      </svg>
-      <span>浏览量&nbsp;</span>
-      <span class="count" id="viewCount">0</span>
-    </div>
   </div>
 </nav>
 
@@ -576,15 +559,6 @@ ul, ol { list-style: none; }
 </div>
 
 <script>
-// ===== Page View Counter =====
-(function() {
-  const key = 'zjuerh_zhuiji_views';
-  let views = parseInt(localStorage.getItem(key) || '0', 10);
-  views++;
-  localStorage.setItem(key, views.toString());
-  document.getElementById('viewCount').textContent = views.toLocaleString();
-})();
-
 // ===== Slideshow =====
 (function() {
   const container = document.getElementById('slideshow');
