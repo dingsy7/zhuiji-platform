@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>科研启航系列课程 - 筑基云平台</title>
+<style>
+:root {
+  --zju-blue: #003B7E;
+  --zju-blue-light: #005A9E;
+  --zju-blue-pale: #E8F0FA;
+  --bg-white: #FFFFFF;
+  --bg-light: #F5F7FA;
+  --text-primary: #1A1A1A;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --border: #E0E4E8;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --radius: 8px;
+  --font-cn: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
+  --nav-height: 56px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-cn); color: var(--text-primary); background: var(--bg-light); line-height: 1.7;
+  -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+}
+a { text-decoration: none; color: inherit; }
+
+/* Navbar */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-height); background: var(--zju-blue);
+  box-shadow: 0 2px 8px rgba(0,59,126,0.2);
+  display: flex; align-items: center; padding: 0 24px;
+}
+.navbar-inner { width: 100%; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+.navbar-logo { height: 36px; }
+.navbar-logo img { height: 36px; filter: brightness(0) invert(1); }
+.back-btn { color: rgba(255,255,255,0.9); font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.back-btn:hover { opacity: 0.8; }
+
+.main { padding-top: var(--nav-height); }
+.header {
+  background: linear-gradient(135deg, #1B5E9B 0%, #3A8FD4 100%);
+  color: #fff; padding: 48px 24px 40px; text-align: center;
+}
+.header h1 { font-size: 1.8rem; margin-bottom: 8px; }
+.header p { opacity: 0.85; font-size: 0.95rem; }
+
+.content { max-width: 1100px; margin: 0 auto; padding: 32px 24px; display: grid; grid-template-columns: 280px 1fr; gap: 24px; }
+
+/* Sidebar playlist */
+.sidebar {
+  background: #fff; border-radius: 10px; box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border); overflow: hidden; height: fit-content;
+  position: sticky; top: calc(var(--nav-height) + 24px);
+}
+.sidebar-title {
+  padding: 16px 18px; font-weight: 600; font-size: 0.95rem;
+  color: var(--zju-blue); border-bottom: 1px solid var(--border);
+}
+.playlist-item {
+  padding: 12px 18px; cursor: pointer; border-bottom: 1px solid var(--border);
+  transition: background 0.2s; display: flex; align-items: center; gap: 10px;
+  font-size: 0.9rem; color: var(--text-secondary);
+}
+.playlist-item:last-child { border-bottom: none; }
+.playlist-item:hover { background: var(--zju-blue-pale); }
+.playlist-item.active { background: var(--zju-blue-pale); color: var(--zju-blue); font-weight: 600; border-left: 3px solid var(--zju-blue); }
+.playlist-item .num {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--bg-light);
+  display: flex; align-items: center; justify-content: center; font-size: 0.8rem;
+  font-weight: 600; flex-shrink: 0;
+}
+.playlist-item.active .num { background: var(--zju-blue); color: #fff; }
+
+/* Video area */
+.video-area {
+  background: #fff; border-radius: 10px; box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border); overflow: hidden;
+}
+.video-wrapper { background: #000; }
+.video-wrapper video { width: 100%; display: block; max-height: 480px; }
+.video-info { padding: 20px 24px; }
+.video-info h2 { font-size: 1.2rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+.video-info p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+
+@media (max-width: 768px) {
+  .content { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+}
+</style>
+</head>
+<body oncontextmenu="return false;">
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-logo"><img src="../../logo.png" alt="浙大二院"></div>
+    <a href="../../index.html" class="back-btn">← 返回首页</a>
+  </div>
+</nav>
+
+<main class="main">
+  <div class="header">
+    <h1>科研启航系列课程</h1>
+    <p>科研入门 · 方法学 · 论文写作 — 临床科研的启航之路</p>
+  </div>
+
+  <div class="content">
+    <aside class="sidebar">
+      <div class="sidebar-title">课程列表</div>
+      <div id="playlist"></div>
+    </aside>
+
+    <div class="video-area">
+      <div class="video-wrapper">
+        <video id="videoPlayer" controls controlsList="nodownload" preload="metadata">
+          您的浏览器不支持视频播放
+        </video>
+      </div>
+      <div class="video-info">
+        <h2 id="videoTitle">请从左侧选择课程</h2>
+        <p id="videoDesc"></p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// 防下载保护：禁用右键已通过 body oncontextmenu="return false;" 实现
+// 禁用 Ctrl+S / Ctrl+U / F12
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey && (e.key === 's' || e.key === 'S' || e.key === 'u' || e.key === 'U')) || e.key === 'F12') {
+    e.preventDefault();
+    return false;
+  }
+});
+
+const videos = [
+  { file: 'videos/从数据到诊疗_多组学与AI的临床应用.mp4', title: '从数据到诊疗：多组学与AI的临床应用', desc: '介绍多组学技术与人工智能在临床诊疗中的前沿应用，帮助医学生理解精准医学的数据驱动范式。' },
+  { file: 'videos/学术论文写作规范.mov', title: '学术论文写作规范', desc: '系统讲解医学学术论文的写作规范、结构要求、语言风格及常见错误，提升学术表达能力。' },
+  { file: 'videos/投稿全流程经验分享.mp4', title: '投稿全流程经验分享', desc: '分享学术期刊投稿的全流程经验，包括期刊选择、 cover letter 撰写、审稿意见回复及修稿策略。' },
+  { file: 'videos/点滴现象积累中开始的临床研究探索.mp4', title: '点滴现象积累中开始的临床研究探索', desc: '从临床现象出发，讲解如何发现问题、提出问题并转化为科学的研究假设，培养临床科研思维。' },
+  { file: 'videos/科研全流程方法论  选题、设计、写作与投稿.mp4', title: '科研全流程方法论：选题、设计、写作与投稿', desc: '系统梳理科研全流程的关键环节，从选题策略、研究设计、论文写作到期刊投稿，构建完整的科研方法论体系。' }
+];
+
+const playlist = document.getElementById('playlist');
+const videoPlayer = document.getElementById('videoPlayer');
+const videoTitle = document.getElementById('videoTitle');
+const videoDesc = document.getElementById('videoDesc');
+
+videos.forEach((v, i) => {
+  const item = document.createElement('div');
+  item.className = 'playlist-item';
+  item.innerHTML = `<span class="num">${i+1}</span><span>${v.title}</span>`;
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.playlist-item').forEach(el => el.classList.remove('active'));
+    item.classList.add('active');
+    videoPlayer.src = v.file;
+    videoTitle.textContent = v.title;
+    videoDesc.textContent = v.desc;
+    videoPlayer.play().catch(() => {});
+  });
+  playlist.appendChild(item);
+});
+</script>
+</body>
+</html>
