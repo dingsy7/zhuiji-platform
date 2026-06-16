@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>临床胜任力筑基云平台 - 浙大二院</title>
+<style>
+/* ===== CSS Variables ===== */
+:root {
+  --zju-blue: #003B7E;
+  --zju-blue-light: #005A9E;
+  --zju-blue-pale: #E8F0FA;
+  --zju-gold: #C4922E;
+  --bg-white: #FFFFFF;
+  --bg-light: #F5F7FA;
+  --bg-card: #FFFFFF;
+  --text-primary: #1A1A1A;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --border: #E0E4E8;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --radius: 8px;
+  --radius-lg: 12px;
+  --font-cn: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
+  --font-en: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --nav-height: 64px;
+  --max-width: 1200px;
+}
+
+/* ===== Reset ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-cn);
+  color: var(--text-primary);
+  background: var(--bg-light);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+ul, ol { list-style: none; }
+
+/* ===== Navigation Bar ===== */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: var(--nav-height);
+  background: var(--zju-blue);
+  box-shadow: 0 2px 12px rgba(0,59,126,0.25);
+  display: flex; align-items: center;
+  padding: 0 24px;
+}
+.navbar-inner {
+  width: 100%; max-width: var(--max-width); margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.navbar-logo { height: 42px; }
+.navbar-logo img { height: 42px; width: auto; filter: brightness(0) invert(1); }
+
+/* Page View Counter */
+.page-counter {
+  display: flex; align-items: center; gap: 6px;
+  color: rgba(255,255,255,0.9); font-size: 0.82rem;
+  cursor: default;
+}
+.page-counter svg { width: 18px; height: 18px; opacity: 0.8; }
+.page-counter .count { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ===== Main Content ===== */
+.main { padding-top: var(--nav-height); }
+
+/* ===== Hero Section ===== */
+.hero {
+  background: linear-gradient(135deg, var(--zju-blue) 0%, #002752 100%);
+  color: #FFFFFF;
+  padding: 60px 24px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-inner { max-width: var(--max-width); margin: 0 auto; position: relative; z-index: 1; }
+.hero h1 {
+  font-size: 2.2rem; font-weight: 700; letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+.hero p {
+  font-size: 1.1rem; opacity: 0.85; max-width: 700px; margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* ===== Section Common ===== */
+.section {
+  padding: 56px 24px;
+}
+.section-inner { max-width: var(--max-width); margin: 0 auto; }
+.section-title {
+  font-size: 1.75rem; font-weight: 700; color: var(--zju-blue);
+  text-align: center; margin-bottom: 12px;
+  position: relative;
+}
+.section-title::after {
+  content: ''; display: block;
+  width: 48px; height: 3px; background: var(--zju-gold);
+  margin: 12px auto 0; border-radius: 2px;
+}
+.section-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 40px; font-size: 0.95rem; }
+
+/* ===== Hospital Intro ===== */
+.intro-section { background: var(--bg-white); }
+.intro-content {
+  display: grid; grid-template-columns: 1fr 340px; gap: 40px;
+  align-items: start;
+}
+.intro-text { font-size: 0.95rem; color: var(--text-secondary); line-height: 2; }
+.intro-text p { margin-bottom: 16px; text-indent: 2em; }
+.intro-text p:first-child { margin-top: 0; }
+.intro-text .highlight { color: var(--zju-blue); font-weight: 600; }
+.intro-side {
+  display: flex; flex-direction: column; gap: 20px;
+}
+
+/* ===== Intro Slideshow ===== */
+.slideshow-container {
+  border-radius: var(--radius-lg);
+  overflow: hidden; border: 1px solid var(--border);
+  position: relative; aspect-ratio: 4 / 3;
+  background: var(--bg-light);
+}
+.slideshow-container img {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity 0.8s ease;
+}
+.slideshow-container img.active { opacity: 1; }
+.slideshow-dots {
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px; z-index: 5;
+}
+.slideshow-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.5); cursor: pointer;
+  transition: background 0.3s;
+}
+.slideshow-dot.active { background: #FFFFFF; }
+
+/* ===== Course Module Tabs ===== */
+.course-section { background: var(--bg-light); }
+.modules-tabs {
+  display: flex; justify-content: center; gap: 8px; margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.module-tab {
+  padding: 10px 28px; border-radius: 24px; cursor: pointer;
+  font-size: 0.95rem; font-weight: 500;
+  background: var(--bg-white); color: var(--text-secondary);
+  border: 1.5px solid var(--border);
+  transition: all 0.25s ease;
+  user-select: none;
+}
+.module-tab:hover { border-color: var(--zju-blue); color: var(--zju-blue); }
+.module-tab.active {
+  background: var(--zju-blue); color: #FFFFFF;
+  border-color: var(--zju-blue);
+  box-shadow: 0 2px 8px rgba(0,59,126,0.3);
+}
+
+.module-icon {
+  display: inline-block; margin-right: 4px; font-size: 1.1rem;
+}
+
+/* ===== Course Cards ===== */
+.courses-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+.course-card {
+  background: var(--bg-white); border-radius: var(--radius-lg);
+  overflow: hidden; box-shadow: var(--shadow-sm);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer; border: 1px solid var(--border);
+  display: block; color: inherit; text-decoration: none;
+}
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.course-cover {
+  height: 160px; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.course-cover.knowledge { background: linear-gradient(135deg, #1B5E9B 0%, #3A8FD4 100%); }
+.course-cover.skill { background: linear-gradient(135deg, #0D7C6B 0%, #2BB59B 100%); }
+.course-cover.quality { background: linear-gradient(135deg, #8B4513 0%, #C4733E 100%); }
+.course-cover.research { background: linear-gradient(135deg, #5B2C8E 0%, #8B5FBF 100%); }
+
+.course-cover-icon {
+  font-size: 2.6rem; opacity: 0.75; color: rgba(255,255,255,0.9);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.course-body { padding: 20px; }
+.course-body h3 {
+  font-size: 1.05rem; font-weight: 600; color: var(--text-primary);
+  margin-bottom: 8px; line-height: 1.5;
+}
+.course-body .course-desc {
+  font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ===== Course Badges ===== */
+.course-badge {
+  display: inline-block; font-size: 0.65rem; font-weight: 600;
+  padding: 1px 8px; border-radius: 10px; margin-left: 6px;
+  vertical-align: middle; letter-spacing: 1px;
+}
+.badge-national { background: #c0392b; color: #fff; }
+.badge-provincial { background: #d4a017; color: #fff; }
+
+/* ===== No Courses (hidden by default) ===== */
+.module-panel { display: none; }
+.module-panel.active { display: block; }
+
+/* ===== Course Detail Modal ===== */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.55); z-index: 2000;
+  display: none; align-items: center; justify-content: center;
+  padding: 24px; overflow-y: auto;
+}
+.modal-overlay.open { display: flex; }
+.modal-container {
+  background: var(--bg-white); border-radius: var(--radius-lg);
+  max-width: 800px; width: 100%; max-height: 85vh;
+  overflow-y: auto; box-shadow: var(--shadow-lg);
+  position: relative; animation: modalIn 0.3s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(0,0,0,0.06); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; color: var(--text-secondary);
+  transition: background 0.2s; z-index: 10;
+}
+.modal-close:hover { background: rgba(0,0,0,0.12); }
+.modal-header {
+  padding: 32px 32px 0;
+}
+.modal-header h2 {
+  font-size: 1.5rem; font-weight: 700; color: var(--zju-blue);
+  margin-bottom: 12px;
+}
+.modal-header .modal-meta {
+  font-size: 0.85rem; color: var(--text-muted);
+  display: flex; gap: 16px; flex-wrap: wrap;
+}
+.modal-body { padding: 24px 32px 32px; }
+.modal-intro { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; margin-bottom: 28px; }
+
+.resource-list { display: flex; flex-direction: column; gap: 12px; }
+.resource-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px; border-radius: var(--radius);
+  background: var(--bg-light); border: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.resource-item:hover { background: var(--zju-blue-pale); }
+.resource-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+.resource-icon.ppt { background: #FFF3E0; color: #E65100; }
+.resource-icon.video { background: #E3F2FD; color: #1565C0; }
+.resource-icon.link { background: #E8F5E9; color: #2E7D32; }
+.resource-info { flex: 1; min-width: 0; }
+.resource-info .r-title { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
+.resource-info .r-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+.resource-btn {
+  padding: 6px 16px; border-radius: 16px; font-size: 0.8rem;
+  border: 1px solid var(--zju-blue); color: var(--zju-blue);
+  background: transparent; cursor: pointer; white-space: nowrap;
+  transition: all 0.2s;
+}
+.resource-btn:hover { background: var(--zju-blue); color: #FFFFFF; }
+.resource-btn.disabled {
+  border-color: var(--border); color: var(--text-muted); cursor: not-allowed;
+}
+.resource-btn.disabled:hover { background: transparent; color: var(--text-muted); }
+
+/* ===== Footer ===== */
+.footer {
+  background: var(--zju-blue); color: rgba(255,255,255,0.8);
+  padding: 32px 24px; text-align: center; font-size: 0.85rem;
+  line-height: 2;
+}
+.footer strong { color: #FFFFFF; }
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 1.5rem; }
+  .hero p { font-size: 0.95rem; }
+  .intro-content { grid-template-columns: 1fr; }
+  .intro-side { order: -1; }
+  .courses-grid { grid-template-columns: 1fr; }
+  .modal-container { max-height: 90vh; }
+  .modal-header, .modal-body { padding-left: 20px; padding-right: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Navigation ===== -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-logo">
+      <img src="logo.png" alt="浙江大学医学院附属第二医院">
+    </div>
+    <div class="page-counter" title="页面浏览量">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>
+      <span>浏览量&nbsp;</span>
+      <span class="count" id="viewCount">0</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Main Content ===== -->
+<main class="main">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>临床胜任力筑基云平台</h1>
+      <p>浙江大学医学院附属第二医院倾力打造的在线医学教育平台，<br>以百年"3H"育人理念为根基，面向全国医学生开放优质教学资源。</p>
+    </div>
+  </section>
+
+  <!-- Hospital Introduction -->
+  <section class="section intro-section" id="intro">
+    <div class="section-inner">
+      <h2 class="section-title">医院介绍</h2>
+      <p class="section-subtitle">百年广济 · 医道传承 · 教学相长</p>
+      <div class="intro-content">
+        <div class="intro-text">
+          <p>浙江大学医学院附属第二医院（简称<span class="highlight">"浙大二院"</span>）创建于1869年，前身为英国圣公会设立的杭州广济医院，是<span class="highlight">浙江省西医发源地</span>、全国首家三级甲等医院。1881年，广济医校在此诞生，点燃了浙江西医教育的星火。时任校长梅滕更提出<span class="highlight">"3H"理论</span>——Heart（医者仁心）、Head（知识创新）、Hand（专业技能），高度凝练医学教育本质，历经百年传承，至今仍是浙大二院教书育人的核心精神灯塔。</p>
+          <p>一百多年来，从首任院长的深深一躬，到今日跨越山海的帮扶足迹，浙大二院始终将<span class="highlight">"教书育人"与"救死扶伤"</span>深度融合。1998年四校合并后，医院在浙江大学<span class="highlight">"求是创新"</span>校训的浸润下，构建起从见习、实习到专硕的三阶段递进式育人体系。医院现有<span class="highlight">解放路院区、滨江院区、城东院区、博奥院区</span>等多个院区，拥有<span class="highlight">国家临床重点专科16个、国家住培重点专业基地8个</span>，多个专科长期位列复旦排行榜前十，国家自然科学基金获批项目数连续多年全国领先，<span class="highlight">"国考"连续六年稳居全国第一方阵前列</span>。依托强大的临床、教学水平，十年来累计培育近5000位住培学员。医院还推出<span class="highlight">"山海·飞鹰"</span>青年骨干高级研修班、大学生村医赋能计划等项目，以教学无界的开放胸怀，将优质医学教育资源辐射全国。</p>
+          <p>中国科学院院士、浙大二院院长王建安教授指出："变化的，是与时俱进的教学模式；不变的，是一以贯之的育人初心。"在教育改革的浪潮中，浙大二院以传承创新的实践，铿锵回应"何为良医、如何育才"的时代之问。临床胜任力筑基云平台正是医院顺应数字化教育趋势，面向全国医学本科生精心打造的系统化在线课程资源库，致力于为新一代医学生的成长筑牢根基。</p>
+        </div>
+        <div class="intro-side">
+          <!-- 照片轮播 -->
+          <div class="slideshow-container" id="slideshow">
+            <img src="img1.jpg" alt="浙大二院" class="active" onerror="this.style.display='none'">
+            <img src="img2.jpg" alt="浙大二院" onerror="this.style.display='none'">
+            <img src="img3.jpg" alt="浙大二院" onerror="this.style.display='none'">
+            <img src="img4.jpg" alt="浙大二院" onerror="this.style.display='none'">
+            <div class="slideshow-dots" id="slideshowDots"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Course Modules -->
+  <section class="section course-section" id="courses">
+    <div class="section-inner">
+      <h2 class="section-title">筑基课程</h2>
+      <p class="section-subtitle">涵盖知识、技能、素养、科研四大模块，系统构建临床医学核心能力体系</p>
+
+      <!-- Module Tabs -->
+      <div class="modules-tabs">
+        <div class="module-tab active" data-module="knowledge">
+          <span class="module-icon">📖</span>知识
+        </div>
+        <div class="module-tab" data-module="skill">
+          <span class="module-icon">🩺</span>技能
+        </div>
+        <div class="module-tab" data-module="quality">
+          <span class="module-icon">❤️</span>素养
+        </div>
+        <div class="module-tab" data-module="research">
+          <span class="module-icon">🔬</span>科研
+        </div>
+      </div>
+
+      <!-- Knowledge Module -->
+      <div class="module-panel active" id="panel-knowledge">
+        <div class="courses-grid">
+
+          <div class="course-card" onclick="window.open('courses/knowledge/mooc.html','_self')">
+            <div class="course-cover knowledge" style="background: #fff; padding: 0;">
+              <img src="cover-mooc.jpg" alt="多学科筑基慕课" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="course-body">
+              <h3>多学科筑基慕课</h3>
+              <p class="course-desc">20门跨学科慕课资源，由浙大二院各学科优秀师资主讲，涵盖内科、外科、影像、急救等核心领域。</p>
+            </div>
+          </div>
+
+          <div class="course-card" onclick="window.open('courses/knowledge/ppts-viewer.html','_self')">
+            <div class="course-cover knowledge" style="background: #fff; padding: 0;">
+              <img src="img/lectures.jpg" alt="临床问题串联精品小讲课" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="course-body">
+              <h3>临床问题串联精品小讲课</h3>
+              <p class="course-desc">以真实临床问题为驱动，串联多学科知识点，11讲精品课程助力构建系统化临床思维框架。</p>
+            </div>
+          </div>
+
+          <div class="course-card" onclick="window.open('courses/knowledge/sanjike.html','_self')">
+            <div class="course-cover knowledge" style="background: #fff; padding: 0;">
+              <img src="img/sanjike-cover.jpg" alt="本科三基课程" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="course-body">
+              <h3>本科三基课程</h3>
+              <p class="course-desc">基本理论、基本知识、基本技能——临床医学的必修基石，由各学科主任以病例串联多学科基础诊疗逻辑。</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Skill Module -->
+      <div class="module-panel" id="panel-skill">
+        <div class="courses-grid">
+
+          <a class="course-card" href="https://lcsw.doctoru.net/zju/clinic/login.html" target="_blank" rel="noopener">
+            <div class="course-cover skill" style="background: #fff; padding: 0;">
+              <img src="img/vascular.jpg" alt="血管急重症" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="course-body">
+              <h3>血管急重症临床思维虚拟仿真教学项目<span class="course-badge badge-national">国家级</span></h3>
+              <p class="course-desc">围绕血管急重症的临床诊疗全流程，构建高度仿真的虚拟病例场景，训练学员在紧急情境下的系统化临床思维与决策能力。</p>
+            </div>
+          </a>
+
+          <a class="course-card" href="https://z2.hospital.huaext.cn/#/pages/login/login" target="_blank" rel="noopener">
+            <div class="course-cover skill" style="background: #fff; padding: 0;">
+              <img src="img/trauma.jpg" alt="严重创伤" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="course-body">
+              <h3>严重创伤急诊救治虚拟仿真临床思维训练<span class="course-badge badge-provincial">省级</span></h3>
+              <p class="course-desc">模拟严重创伤患者的急诊接诊、伤情评估、损伤控制与多学科协作救治全链条，培养"黄金一小时"救治思维。</p>
+            </div>
+          </a>
+
+          <a class="course-card" href="https://lcsw.doctoru.net/z2h" target="_blank" rel="noopener">
+            <div class="course-cover skill" style="background: #fff; padding: 0;">
+              <img src="img/orthopedics.jpg" alt="骨科急重症" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="course-body">
+              <h3>骨科急重症临床思维虚拟仿真系统<span class="course-badge badge-provincial">省级</span></h3>
+              <p class="course-desc">围绕骨科急重症的快速识别与处理，构建从急诊接诊到确定性治疗的完整虚拟仿真训练流程。</p>
+            </div>
+          </a>
+
+          <a class="course-card" href="https://lcjzu.zgmedu.com/login/#/" target="_blank" rel="noopener">
+            <div class="course-cover skill" style="background: #fff; padding: 0;">
+              <img src="img/ileus.jpg" alt="急性肠梗阻" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="course-body">
+              <h3>急性肠梗阻临床思维训练的虚拟仿真项目<span class="course-badge badge-provincial">省级</span></h3>
+              <p class="course-desc">以急性肠梗阻为切入点，模拟从病史采集、腹部查体、影像学分析到手术时机决策的递进式临床思维训练。</p>
+            </div>
+          </a>
+
+          <a class="course-card" href="https://www.doctor-u.cn/z2h/clinic/login.htm" target="_blank" rel="noopener">
+            <div class="course-cover skill" style="background: #fff; padding: 0;">
+              <img src="img/spine.jpg" alt="脊柱外科" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="course-body">
+              <h3>脊柱外科临床思维虚拟仿真教学系统<span class="course-badge badge-provincial">省级</span></h3>
+              <p class="course-desc">以脊柱外科典型病例为蓝本，模拟从问诊、查体、影像判读到手术决策的完整诊疗路径，夯实脊柱外科临床基本功。</p>
+            </div>
+          </a>
+
+          <a class="course-card" href="https://www.doctor-u.cn/zjub/clinic/login.html" target="_blank" rel="noopener">
+            <div class="course-cover skill" style="background: #fff; padding: 0;">
+              <img src="img/neurosurgery.jpg" alt="神经外科" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="course-body">
+              <h3>神经外科临床思维虚拟仿真教学项目<span class="course-badge badge-provincial">省级</span></h3>
+              <p class="course-desc">聚焦神经外科常见急症与疑难病例，通过虚拟仿真技术还原颅内病变的定位、定性诊断与手术规划过程。</p>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Quality Module -->
+      <div class="module-panel" id="panel-quality">
+        <div class="courses-grid">
+
+          <div class="course-card" onclick="window.open('courses/quality/medical-humanities.html','_self')">
+            <div class="course-cover quality" style="background: #fff; padding: 0;">
+              <img src="img/humanities.jpg" alt="医学人文与专业素养" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="course-body">
+              <h3>《医学人文与专业素养》系列课程</h3>
+              <p class="course-desc">以"医者仁心"为主线，融合医学伦理、医患沟通、职业精神等人文素养教育，培养有温度的医学人才。</p>
+            </div>
+          </div>
+
+          <div class="course-card" onclick="window.open('courses/quality/psychology.html','_self')">
+            <div class="course-cover quality" style="background: #fff; padding: 0;">
+              <img src="img/psychology.jpg" alt="关爱心理与情绪健康" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="course-body">
+              <h3>关爱心理与情绪健康</h3>
+              <p class="course-desc">帮助医学生掌握心理学基础知识与情绪调节技巧，提升自我认知与抗压能力，为临床工作做好心理准备。</p>
+            </div>
+          </div>
+
+          <div class="course-card" onclick="window.open('courses/quality/my-humanities.html','_self')">
+            <div class="course-cover quality" style="background: #fff; padding: 0;">
+              <img src="img/my-humanities.jpg" alt="我的医学人文观" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="course-body">
+              <h3>院士讲座《我的医学人文观》</h3>
+              <p class="course-desc">分享数十年从医感悟与人文思考，启发医学生对医学本质的深层理解。</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Research Module -->
+      <div class="module-panel" id="panel-research">
+        <div class="courses-grid">
+
+          <div class="course-card" onclick="window.open('courses/research/qihang.html','_self')">
+            <div class="course-cover research" style="background: #fff; padding: 0;">
+              <img src="img/research.jpg" alt="科研启航系列课程" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="course-body">
+              <h3>科研启航系列课程</h3>
+              <p class="course-desc">科研入门 · 方法学 · 论文写作 — 临床科研的启航之路。5讲视频课程系统讲解科研全流程。</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <p><strong>浙江大学医学院附属第二医院 临床胜任力筑基云平台</strong></p>
+  <p>地址：浙江省杭州市解放路88号（解放路院区）&nbsp;&nbsp;|&nbsp;&nbsp;杭州市滨江区江虹路1511号（滨江院区）</p>
+  <p>© 2026 浙江大学医学院附属第二医院 · 教学部 版权所有</p>
+</footer>
+
+<!-- ===== Course Detail Modal ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-container" id="modalContainer" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModalDirect()" title="关闭">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+// ===== Page View Counter =====
+(function() {
+  const key = 'zjuerh_zhuiji_views';
+  let views = parseInt(localStorage.getItem(key) || '0', 10);
+  views++;
+  localStorage.setItem(key, views.toString());
+  document.getElementById('viewCount').textContent = views.toLocaleString();
+})();
+
+// ===== Slideshow =====
+(function() {
+  const container = document.getElementById('slideshow');
+  const slides = container.querySelectorAll('img');
+  const dotsContainer = document.getElementById('slideshowDots');
+  let current = 0;
+  let timer;
+
+  // Create dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.className = 'slideshow-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
+  });
+  const dots = dotsContainer.querySelectorAll('.slideshow-dot');
+
+  function goTo(index) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = index;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    resetTimer();
+  }
+
+  function next() {
+    goTo((current + 1) % slides.length);
+  }
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(next, 4000);
+  }
+
+  resetTimer();
+})();
+
+// ===== Module Tab Switching =====
+document.querySelectorAll('.module-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.module-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+    const module = this.dataset.module;
+    document.querySelectorAll('.module-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + module).classList.add('active');
+  });
+});
+
+// ===== Course Data =====
+const courseData = {
+  'internal-medicine': {
+    title: '内科病临床思维',
+    module: '知识',
+    type: '在线课程',
+    intro: '本课程以临床常见症状为切入点，通过"症状→鉴别诊断→疾病确认→治疗方案"的完整逻辑链条，系统训练医学生的内科临床推理能力与诊疗决策思维。课程涵盖呼吸、循环、消化、泌尿、血液、内分泌等各大系统常见病症，结合真实病例讨论，帮助学习者建立"从现象到本质"的系统化临床思维模式。',
+    resources: [
+      { type: 'link', title: '课程介绍', desc: '内科病临床思维课程大纲与学习指南', ready: false },
+      { type: 'link', title: '在线课程入口', desc: '点击访问完整课程内容', ready: false }
+    ]
+  },
+  'clinical-lectures': {
+    title: '临床问题串联精品小讲课',
+    module: '知识',
+    type: '11个PPT课件',
+    intro: '该系列课程以真实临床问题为驱动，每一个问题串联多个学科的知识点，引导学习者跳出单一学科思维，建立跨学科、系统化的临床分析框架。11讲精品课程涵盖内、外、妇、儿等多个临床领域，由各学科资深教师精心打磨，是浙大二院临床教学的品牌课程之一。',
+    resources: Array.from({length: 11}, (_, i) => ({
+      type: 'ppt',
+      title: '第' + (i+1) + '讲',
+      desc: 'PPT课件（待上传）',
+      ready: false
+    }))
+  },
+  'sanjike': {
+    title: '三基课程',
+    module: '知识',
+    type: '5个教学视频',
+    intro: '"三基"即基本理论、基本知识、基本技能，是临床医学教育的基础与核心。浙大二院各学科主任每周三以大量丰富的病例故事，串联多学科基础诊疗逻辑进行授课，旨在培养学员的临床系统思维。该特色课程广受好评，年上线学习超2万人次。',
+    resources: Array.from({length: 5}, (_, i) => ({
+      type: 'video',
+      title: '三基课程 第' + (i+1) + '讲',
+      desc: '教学视频（待上传）',
+      ready: false
+    }))
+  },
+  'virtual-sim': {
+    title: '多学科虚拟仿真系统',
+    module: '技能',
+    type: '6个仿真项目',
+    intro: '依托先进的虚拟仿真技术，本系统覆盖内科、外科、急诊医学、护理、麻醉、重症监护等多学科典型临床场景。学习者在仿真环境中进行病史采集、体格检查、辅助检查判读、诊疗决策等操作，在"零风险"环境中反复练习，有效提升临床实操能力与应急决策水平。',
+    resources: Array.from({length: 6}, (_, i) => ({
+      type: 'link',
+      title: '虚拟仿真项目 ' + (i+1),
+      desc: '项目介绍及访问链接（待添加）',
+      ready: false
+    }))
+  },
+  'medical-humanities': {
+    title: '《医学人文与专业素养》系列课程',
+    module: '素养',
+    type: '系列课程',
+    intro: '以"医者仁心"为主线，本系列课程涵盖医学伦理学、医患沟通技巧、医学社会学、职业精神培养、叙事医学等多个维度。课程旨在引导医学生深刻理解医学的人文本质，在掌握专业知识的同时，培养对患者的同理心、对职业的敬畏心、对社会的责任感。',
+    resources: [
+      { type: 'video', title: '医学人文系列课程', desc: '系列课程内容（待上传）', ready: false }
+    ]
+  },
+  'psychology': {
+    title: '心理学与情绪管理',
+    module: '素养',
+    type: '1个PPT + 1个视频',
+    intro: '医学既是高强度的知识密集型学科，也是高压力的职业。本课程帮助医学生系统学习心理学基础理论，掌握情绪识别、压力管理、正念调节等实用技巧，提升自我心理韧性，为应对临床工作中的心理挑战做好充分准备。',
+    resources: [
+      { type: 'ppt', title: '心理学与情绪管理', desc: 'PPT课件（待上传）', ready: false },
+      { type: 'video', title: '心理学与情绪管理', desc: '教学视频（待上传）', ready: false }
+    ]
+  },
+  'my-humanities': {
+    title: '我的医学人文观',
+    module: '素养',
+    type: '院士讲座',
+    intro: '由中国科学院院士、浙大二院院长王建安教授主讲。王院士以数十载从医历程为脉络，分享对医学本质的深刻洞见：医学人文就是"良心+爱心"——听诊前捂热听诊器的细节，病房里为危重患者响起轻柔音乐的温情，无不体现医者对生命的尊重。本讲座是浙大二院人文教育的标志性课程，以院士的亲身感悟照亮医学生的成长之路。',
+    resources: [
+      { type: 'video', title: '我的医学人文观——王建安院士', desc: '讲座视频（待上传）', ready: false }
+    ]
+  },
+  'research-start': {
+    title: '科研启航课程',
+    module: '科研',
+    type: '5个教学视频',
+    intro: '本课程面向本科生的科研入门需求，系统讲解文献检索与阅读方法、研究选题与假设提出、常用实验设计原理、数据统计分析与可视化、学术论文撰写规范等核心内容。5讲课程循序渐进，帮助医学生建立完整的科研思维框架，迈出学术探索的第一步。',
+    resources: Array.from({length: 5}, (_, i) => ({
+      type: 'video',
+      title: '科研启航 第' + (i+1) + '讲',
+      desc: '教学视频（待上传）',
+      ready: false
+    }))
+  }
+};
+
+// ===== Modal Functions =====
+function openCourse(courseId) {
+  const data = courseData[courseId];
+  if (!data) return;
+
+  const typeIcons = {
+    ppt: '<div class="resource-icon ppt">📊</div>',
+    video: '<div class="resource-icon video">🎬</div>',
+    link: '<div class="resource-icon link">🔗</div>'
+  };
+
+  let resourcesHtml = data.resources.map((r, i) => `
+    <div class="resource-item">
+      ${typeIcons[r.type] || typeIcons.link}
+      <div class="resource-info">
+        <div class="r-title">${r.title}</div>
+        <div class="r-desc">${r.desc}</div>
+      </div>
+      <button class="resource-btn ${r.ready ? '' : 'disabled'}"
+              ${!r.ready ? 'disabled' : ''}
+              title="${r.ready ? '点击查看' : '内容待添加'}">
+        ${r.ready ? '查看' : '待添加'}
+      </button>
+    </div>
+  `).join('');
+
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-header">
+      <h2>${data.title}</h2>
+      <div class="modal-meta">
+        <span>📂 ${data.module}模块</span>
+        <span>📦 ${data.type}</span>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-intro">${data.intro}</div>
+      <h3 style="font-size:1.1rem;font-weight:600;color:var(--text-primary);margin-bottom:16px;">课程内容</h3>
+      <div class="resource-list">${resourcesHtml}</div>
+    </div>
+  `;
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(event) {
+  if (event.target === document.getElementById('modalOverlay')) {
+    closeModalDirect();
+  }
+}
+
+function closeModalDirect() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ===== Keyboard close =====
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModalDirect();
+});
+</script>
+
+</body>
+</html>
