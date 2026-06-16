@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《医学人文与专业素养》系列课程 - 筑基云平台</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; font-family: "Microsoft YaHei", "PingFang SC", sans-serif; }
+body { padding-top: 48px; background: #f5f7fa; }
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: #003B7E; color: #fff; padding: 12px 24px;
+  display: flex; align-items: center; gap: 16px; z-index: 100;
+}
+.topbar a { color: #fff; text-decoration: none; font-size: 14px; opacity: 0.85; }
+.topbar a:hover { opacity: 1; }
+.topbar h1 { font-size: 20px; font-weight: 500; }
+.main { display: flex; height: calc(100vh - 48px); min-height: 0; }
+.sidebar {
+  width: 280px; background: #fff; border-right: 1px solid #e0e0e0;
+  overflow-y: auto; flex-shrink: 0;
+}
+.sidebar h2 { font-size: 14px; padding: 16px 20px 8px; color: #888; letter-spacing: 1px; }
+.item {
+  padding: 12px 20px; cursor: pointer; font-size: 14px; color: #333;
+  border-left: 3px solid transparent; transition: all 0.15s;
+}
+.item:hover { background: #f0f4ff; color: #003B7E; }
+.item.active { background: #e8f0fe; color: #003B7E; border-left-color: #003B7E; font-weight: 600; }
+.viewer { flex: 1; display: flex; flex-direction: column; background: #525659; }
+.info-bar {
+  background: #fff; padding: 10px 20px; font-size: 15px; font-weight: 600;
+  color: #003B7E; border-bottom: 1px solid #e0e0e0; flex-shrink: 0;
+}
+.pdf-wrapper {
+  flex: 1; position: relative; overflow: hidden; min-height: 0;
+}
+.pdf-iframe {
+  position: absolute; top: -45px; left: 0;
+  width: 100%; height: calc(100% + 45px); border: none;
+}
+.placeholder {
+  display: flex; align-items: center; justify-content: center;
+  height: 100%; color: #ccc; font-size: 18px; background: #525659;
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../../index.html">← 返回首页</a>
+  <h1>《医学人文与专业素养》系列课程</h1>
+  <span style="margin-left:auto;font-size:13px;opacity:0.7">共 6 个课件</span>
+</div>
+<div class="main">
+  <div class="sidebar" id="sidebar">
+    <h2>课件列表</h2>
+  </div>
+  <div class="viewer">
+    <div class="info-bar" id="infoBar">请从左侧选择课件</div>
+    <div class="pdf-wrapper" id="pdfWrapper">
+      <div class="placeholder">← 请从左侧选择一个课件开始学习</div>
+    </div>
+  </div>
+</div>
+<script>
+var NAMES = [
+  {name:'纽伦堡法典', file:'05-nuremberg'},
+  {name:'疾病与健康：尊严与权利', file:'04-dignity'},
+  {name:'生命维持、死亡、器官移植', file:'03-life-death'},
+  {name:'新兴生物技术伦理', file:'02-biotech-ethics'},
+  {name:'药品与处方管理课程', file:'06-prescription'},
+  {name:'医生权利与医师法', file:'01-doctor-rights'}
+];
+
+var sidebar = document.getElementById('sidebar');
+var infoBar = document.getElementById('infoBar');
+var pdfWrapper = document.getElementById('pdfWrapper');
+
+NAMES.forEach(function(item) {
+  var el = document.createElement('div');
+  el.className = 'item';
+  el.textContent = item.name;
+  el.onclick = function() {
+    document.querySelectorAll('.item').forEach(function(e) { e.classList.remove('active'); });
+    el.classList.add('active');
+    infoBar.textContent = item.name;
+
+    var old = pdfWrapper.querySelector('iframe');
+    if (old) old.remove();
+    var placeholder = pdfWrapper.querySelector('.placeholder');
+    if (placeholder) placeholder.style.display = 'none';
+
+    var iframe = document.createElement('iframe');
+    iframe.className = 'pdf-iframe';
+    iframe.src = 'humanities-pdfs/' + item.file + '.pdf';
+    pdfWrapper.appendChild(iframe);
+  };
+  sidebar.appendChild(el);
+});
+
+document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); }
+});
+</script>
+</body>
+</html>
