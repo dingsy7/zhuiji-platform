@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>院士讲座《我的医学人文观》 - 筑基云平台</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; font-family: "Microsoft YaHei", "PingFang SC", sans-serif; }
+body { padding-top: 48px; background: #525659; }
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: #003B7E; color: #fff; padding: 12px 24px;
+  display: flex; align-items: center; gap: 16px; z-index: 100;
+}
+.topbar a { color: #fff; text-decoration: none; font-size: 14px; opacity: 0.85; }
+.topbar a:hover { opacity: 1; }
+.topbar h1 { font-size: 20px; font-weight: 500; }
+.pdf-wrapper {
+  height: calc(100vh - 48px); position: relative; overflow: hidden;
+}
+.pdf-iframe {
+  position: absolute; top: -45px; left: 0;
+  width: 100%; height: calc(100% + 45px); border: none;
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../../index.html">← 返回首页</a>
+  <h1>院士讲座《我的医学人文观》</h1>
+</div>
+<div class="pdf-wrapper">
+  <iframe class="pdf-iframe" src="my-humanities/my-humanities-view.pdf"></iframe>
+</div>
+<script>
+document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); }
+});
+</script>
+</body>
+</html>
